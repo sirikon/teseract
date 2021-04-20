@@ -22,5 +22,8 @@
   "homepage": "https://github.com/sirikon/teseract#readme",
   "dependencies": {
     "esbuild": "^0.11.12"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.4"
   }
 }
