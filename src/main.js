@@ -1,4 +1,5 @@
 import serve from './commands/serve.js';
+import build from './commands/build.js';
 
 async function main(args) {
     if (args.length === 0) {
@@ -9,6 +10,7 @@ async function main(args) {
     const [command, ...commandArgs] = args;
     switch(command) {
         case 'serve': await serve(commandArgs); break
+        case 'build': await build(commandArgs); break
         default: console.log(`Unknown command '${command}'`);
     }
 }

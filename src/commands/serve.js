@@ -15,8 +15,8 @@ export default async function() {
 
 async function requestHandler(req, res) {
     switch(req.url) {
-        case '/':        await reply(res, 'text/html',       getIndex());      break
-        case '/main.js': await reply(res, 'text/javascript', getEntrypoint()); break
+        case '/':        await reply(res, 'text/html',       getIndex({ entrypoint: 'main.js' })); break
+        case '/main.js': await reply(res, 'text/javascript', getEntrypoint());                     break
         default: replyNotFound(res);
     }
 }

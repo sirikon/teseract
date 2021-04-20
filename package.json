@@ -8,7 +8,8 @@
     "teseract": "bin/teseract.js"
   },
   "scripts": {
-    "start": "cd example && node .. serve"
+    "start": "cd example && node .. serve",
+    "build-example": "cd example && node .. build"
   },
   "repository": {
     "type": "git",
