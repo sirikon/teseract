@@ -1,0 +1,23 @@
+{
+  "name": "teseract",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "cd example && node .. serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sirikon/teseract.git"
+  },
+  "author": "Carlos Fdez. Llamas <hello@sirikon.me>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/sirikon/teseract/issues"
+  },
+  "homepage": "https://github.com/sirikon/teseract#readme",
+  "dependencies": {
+    "esbuild": "^0.11.12"
+  }
+}
