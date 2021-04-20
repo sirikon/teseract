@@ -1,18 +1,61 @@
 import * as fs from 'fs/promises';
 import * as crypto from 'crypto';
 
-import { buildEntrypoint, getEntrypoint, getIndex } from '../builders.js';
+import { buildEntrypoint, getIndex, getStyle } from '../builders.js';
 
 export default async function() {
+    await resetDist();
+
+    const entrypointFilename = await generateEntrypoint();
+    const styleFilename = await generateStyle();
+
+    await generateIndex({
+        entrypoint: entrypointFilename,
+        style: styleFilename
+    });
+}
+
+async function resetDist() {
     await fs.rm('./dist', { recursive: true, force: true });
     await fs.mkdir('./dist');
-    await buildEntrypoint({ outfile: './dist/main.js', production: true });
-    const entrypointHash = crypto.createHash('md5')
-        .update(await fs.readFile('./dist/main.js', { encoding: 'utf-8' }))
+}
+
+async function generateEntrypoint() {
+    const initialJSPath = './dist/main.js';
+    const initialSourcemapPath = './dist/main.js.map';
+
+    await buildEntrypoint({ outfile: initialJSPath, production: true });
+    const jsHash = await md5File(initialJSPath);
+
+    const jsFilename = `main.${jsHash}.js`;
+    const sourcemapFilename = `main.${jsHash}.js.map`;
+
+    await fs.rename(initialJSPath, `./dist/${jsFilename}`);
+    await fs.rename(initialSourcemapPath, `./dist/${sourcemapFilename}`);
+    await fs.appendFile(`./dist/${jsFilename}`, `\n//# sourceMappingURL=${sourcemapFilename}\n`);
+
+    return jsFilename;
+}
+
+async function generateStyle() {
+    const initialCSSPath = './dist/style.css';
+
+    await fs.writeFile(initialCSSPath, await getStyle(), { encoding: 'utf-8' });
+    const cssHash = await md5File(initialCSSPath);
+
+    const cssFilename = `style.${cssHash}.css`;
+    await fs.rename(initialCSSPath, `./dist/${cssFilename}`);
+
+    return cssFilename;
+}
+
+async function generateIndex({ entrypoint, style }) {
+    await fs.writeFile('./dist/index.html', await getIndex({ entrypoint, style }));
+}
+
+async function md5File(filePath) {
+    return crypto.createHash('md5')
+        .update(await fs.readFile(filePath, { encoding: 'utf-8' }))
         .digest("hex")
         .toLowerCase();
-    await fs.rename('./dist/main.js', `./dist/main.${entrypointHash}.js`);
-    await fs.rename('./dist/main.js.map', `./dist/main.${entrypointHash}.js.map`);
-    await fs.appendFile(`./dist/main.${entrypointHash}.js`, `\n//# sourceMappingURL=main.${entrypointHash}.js.map\n`);
-    await fs.writeFile('./dist/index.html', await getIndex({ entrypoint: `main.${entrypointHash}.js` }));
 }

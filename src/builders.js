@@ -1,5 +1,32 @@
 import esbuild from 'esbuild';
+import sass from 'sass';
+import Fiber from 'fibers';
 import * as fs from 'fs/promises';
+
+export async function getIndex({ entrypoint, style }) {
+    const index = await fs.readFile('src/index.html', { encoding: 'utf-8' });
+    return index
+        .replace(
+            '<!-- teseract:entrypoint -->',
+            `<script src="${entrypoint}" type="text/javascript"></script>`
+        )
+        .replace(
+            '<!-- teseract:style -->',
+            `<link rel="stylesheet" href="${style}">`
+        );
+}
+
+export async function getStyle() {
+    return new Promise((resolve, reject) => {
+        sass.render({
+            file: './src/style.scss',
+            fiber: Fiber
+        }, (err, result) => {
+            if (err) { return reject(err); }
+            resolve(result.css);
+        });
+    });
+}
 
 export async function getEntrypoint({ production = false } = {}) {
     const res = await esbuild.build({
@@ -24,12 +51,4 @@ function esbuildOptions({ production = false }) {
         minify: production,
         bundle: true,
     }
-}
-
-export async function getIndex({ entrypoint }) {
-    const index = await fs.readFile('src/index.html', { encoding: 'utf-8' });
-    return index
-        .replace(
-            '<!-- teseract:entrypoint -->',
-            `<script src="${entrypoint}" type="text/javascript"></script>`);
 }

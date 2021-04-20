@@ -1,12 +1,12 @@
 import http from 'http';
 import { spawn } from 'child_process';
 
-import { getEntrypoint, getIndex } from '../builders.js';
+import { getEntrypoint, getIndex, getStyle } from '../builders.js';
 
 const hostname = '0.0.0.0';
 const port = 8080;
 
-export default async function() {
+export default async function () {
     const httpServer = await startHttpServer();
     const tscProcess = startTSCProcess();
     await waitTSC(tscProcess);
@@ -14,9 +14,10 @@ export default async function() {
 }
 
 async function requestHandler(req, res) {
-    switch(req.url) {
-        case '/':        await reply(res, 'text/html',       getIndex({ entrypoint: 'main.js' })); break
-        case '/main.js': await reply(res, 'text/javascript', getEntrypoint());                     break
+    switch (req.url) {
+        case '/': await reply(res, 'text/html', getIndex({ entrypoint: 'main.js', style: 'style.css' })); break
+        case '/main.js': await reply(res, 'text/javascript', getEntrypoint()); break
+        case '/style.css': await reply(res, 'text/css', getStyle()); break
         default: replyNotFound(res);
     }
 }
