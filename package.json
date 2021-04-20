@@ -4,6 +4,9 @@
   "description": "",
   "type": "module",
   "main": "src/main.js",
+  "bin": {
+    "teseract": "bin/teseract.js"
+  },
   "scripts": {
     "start": "cd example && node .. serve"
   },
