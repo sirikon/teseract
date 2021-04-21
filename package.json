@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "cd example && node .. serve",
-    "build-example": "cd example && node .. build"
+    "build-example": "cd example && node .. build",
+    "test-example": "cd example && node .. test"
   },
   "repository": {
     "type": "git",
@@ -22,10 +23,15 @@
   },
   "homepage": "https://github.com/sirikon/teseract#readme",
   "dependencies": {
+    "@types/mocha": "^8.2.2",
     "esbuild": "^0.11.12",
-    "fibers": "^5.0.0"
+    "fibers": "^5.0.0",
+    "mocha": "^8.3.2",
+    "ts-node": "^9.1.1"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.16",
+    "chai": "^4.3.4",
     "sass": "^1.32.11",
     "typescript": "^4.2.4"
   }

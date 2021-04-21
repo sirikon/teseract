@@ -1,9 +1,11 @@
 import serve from './commands/serve.js';
 import build from './commands/build.js';
+import test from './commands/test.js';
 
 const commands = {
     serve: [serve, 'Starts a HTTP server with live builds.'],
-    build: [build, 'Generates a complete build.']
+    build: [build, 'Generates a complete build.'],
+    test: [test, 'Runs all the tests.']
 }
 
 async function main(args) {
