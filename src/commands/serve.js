@@ -26,7 +26,6 @@ function startHttpServer() {
     return new Promise((resolve) => {
         const server = http.createServer(requestHandler);
         server.listen(port, hostname, () => {
-            console.log(`http://${hostname}:${port}/`);
             resolve(server);
         });
     });
