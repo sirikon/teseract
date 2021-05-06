@@ -1,11 +1,12 @@
-const fs = require('fs').promises;
-const crypto = require('crypto');
+import * as fs from 'fs/promises';
+import crypto from 'crypto';
 
-const { buildEntrypoint, getIndex, getStyle } = require('../builders.js');
+import { buildEntrypoint, getIndex, getStyle, copyStatic } from '../builders.js';
 
-module.exports = async function() {
+export default async function() {
     await resetDist();
 
+    await copyStatic({ outDir: './dist' });
     const entrypointFilename = await generateEntrypoint();
     const styleFilename = await generateStyle();
 

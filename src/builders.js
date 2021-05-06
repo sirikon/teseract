@@ -1,9 +1,24 @@
-const esbuild = require('esbuild');
-const sass = require('sass');
-const Fiber = require('fibers');
-const fs = require('fs').promises;
+import esbuild from 'esbuild';
+import sass from 'sass';
+import Fiber from 'fibers';
+import fsOld from 'fs';
+import fs from 'fs/promises';
+import fse from 'fs-extra';
+import path from 'path';
 
-async function getIndex({ entrypoint, style }) {
+export async function getStatic(filePath) {
+    const staticFilePath = path.join(process.cwd(), 'src', 'static', filePath);
+    if (fsOld.existsSync(staticFilePath)) {
+        return await fs.readFile(staticFilePath, { encoding: 'utf-8' });
+    }
+    return null;
+}
+
+export async function copyStatic({ outDir }) {
+    fse.copySync(path.join(process.cwd(), 'src', 'static'), outDir, { recursive: true });
+}
+
+export async function getIndex({ entrypoint, style }) {
     const index = await fs.readFile('src/index.html', { encoding: 'utf-8' });
     return index
         .replace(
@@ -16,7 +31,7 @@ async function getIndex({ entrypoint, style }) {
         );
 }
 
-async function getStyle() {
+export async function getStyle() {
     return new Promise((resolve, reject) => {
         sass.render({
             file: './src/style.scss',
@@ -28,7 +43,7 @@ async function getStyle() {
     });
 }
 
-async function getEntrypoint({ production = false } = {}) {
+export async function getEntrypoint({ production = false } = {}) {
     const res = await esbuild.build({
         ...esbuildOptions({ production }),
         write: false
@@ -36,7 +51,7 @@ async function getEntrypoint({ production = false } = {}) {
     return Buffer.from(res.outputFiles[0].contents);
 }
 
-async function buildEntrypoint({ outfile, production = false } = {}) {
+export async function buildEntrypoint({ outfile, production = false } = {}) {
     await esbuild.build({
         ...esbuildOptions({ production }),
         outfile
@@ -51,11 +66,4 @@ function esbuildOptions({ production = false }) {
         minify: production,
         bundle: true,
     }
-}
-
-module.exports = {
-    getIndex,
-    getStyle,
-    getEntrypoint,
-    buildEntrypoint
 }

@@ -1,12 +1,13 @@
-const http = require('http');
-const { spawn } = require('child_process');
+import http from 'http';
+import { spawn } from 'child_process';
+import mime from 'mime-types';
 
-const { getEntrypoint, getIndex, getStyle } = require('../builders.js');
+import { getStatic, getEntrypoint, getIndex, getStyle } from '../builders.js';
 
 const hostname = '0.0.0.0';
 const port = 8080;
 
-module.exports = async function () {
+export default async function () {
     const httpServer = await startHttpServer();
     const tscProcess = startTSCProcess();
     await waitTSC(tscProcess);
@@ -15,11 +16,16 @@ module.exports = async function () {
 
 async function requestHandler(req, res) {
     switch (req.url) {
-        case '/': await reply(res, 'text/html', getIndex({ entrypoint: 'main.js', style: 'style.css' })); break
-        case '/main.js': await reply(res, 'text/javascript', getEntrypoint()); break
-        case '/style.css': await reply(res, 'text/css', getStyle()); break
-        default: replyNotFound(res);
+        case '/': return await reply(res, 'text/html', getIndex({ entrypoint: 'main.js', style: 'style.css' }));
+        case '/main.js': return await reply(res, 'text/javascript', getEntrypoint());
+        case '/style.css': return await reply(res, 'text/css', getStyle());
     }
+    const staticContent = await getStatic(req.url);
+    if (staticContent != null) {
+        reply(res, mime.lookup(req.url), Promise.resolve(staticContent));
+        return;
+    }
+    replyNotFound(res);
 }
 
 function startHttpServer() {
