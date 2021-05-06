@@ -2,7 +2,6 @@
   "name": "teseract",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "src/main.js",
   "bin": {
     "teseract": "bin/teseract.js"

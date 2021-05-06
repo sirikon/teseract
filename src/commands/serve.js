@@ -1,12 +1,12 @@
-import http from 'http';
-import { spawn } from 'child_process';
+const http = require('http');
+const { spawn } = require('child_process');
 
-import { getEntrypoint, getIndex, getStyle } from '../builders.js';
+const { getEntrypoint, getIndex, getStyle } = require('../builders.js');
 
 const hostname = '0.0.0.0';
 const port = 8080;
 
-export default async function () {
+module.exports = async function () {
     const httpServer = await startHttpServer();
     const tscProcess = startTSCProcess();
     await waitTSC(tscProcess);

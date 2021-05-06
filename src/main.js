@@ -1,6 +1,6 @@
-import serve from './commands/serve.js';
-import build from './commands/build.js';
-import test from './commands/test.js';
+const serve = require('./commands/serve.js');
+const build = require('./commands/build.js');
+const test = require('./commands/test.js');
 
 const commands = {
     serve: [serve, 'Starts a HTTP server with live builds.'],
