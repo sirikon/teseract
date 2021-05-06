@@ -14,7 +14,9 @@ export async function getStatic(filePath) {
 }
 
 export async function copyStatic({ outDir }) {
-    fse.copySync(path.join(process.cwd(), 'src', 'static'), outDir, { recursive: true });
+    const staticDirPath = path.join(process.cwd(), 'src', 'static');
+    if (!fsOld.existsSync(staticDirPath)) return;
+    fse.copySync(staticDirPath, outDir, { recursive: true });
 }
 
 export async function getIndex({ entrypoint, style }) {
