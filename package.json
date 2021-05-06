@@ -25,7 +25,6 @@
   "dependencies": {
     "@types/mocha": "^8.2.2",
     "esbuild": "^0.11.12",
-    "fibers": "^5.0.0",
     "fs-extra": "^10.0.0",
     "mime-types": "^2.1.30",
     "mocha": "^8.3.2",

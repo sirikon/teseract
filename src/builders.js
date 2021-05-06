@@ -1,6 +1,5 @@
 import esbuild from 'esbuild';
 import sass from 'sass';
-import Fiber from 'fibers';
 import fsOld from 'fs';
 import fs from 'fs/promises';
 import fse from 'fs-extra';
@@ -35,7 +34,7 @@ export async function getStyle() {
     return new Promise((resolve, reject) => {
         sass.render({
             file: './src/style.scss',
-            fiber: Fiber
+            fiber: getFibers()
         }, (err, result) => {
             if (err) { return reject(err); }
             resolve(result.css);
@@ -56,6 +55,14 @@ export async function buildEntrypoint({ outfile, production = false } = {}) {
         ...esbuildOptions({ production }),
         outfile
     })
+}
+
+function getFibers() {
+    try {
+        return require('fibers');
+    } catch (_) {
+        return undefined;
+    }
 }
 
 function esbuildOptions({ production = false }) {
