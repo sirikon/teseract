@@ -9,7 +9,9 @@
   },
   "scripts": {
     "start": "cd example && node .. serve",
+    "lint-example": "cd example && node .. lint",
     "build-example": "cd example && node .. build",
+    "release-example": "cd example && node .. release",
     "test-example": "cd example && node .. test"
   },
   "repository": {
@@ -28,7 +30,10 @@
     "fs-extra": "^10.0.0",
     "mime-types": "^2.1.30",
     "mocha": "^8.3.2",
-    "ts-node": "^9.1.1"
+    "ts-node": "^9.1.1",
+    "eslint": "^7.26.0",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.16",

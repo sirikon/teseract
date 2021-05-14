@@ -1,10 +1,14 @@
 import serve from './commands/serve.js';
+import lint from './commands/lint.js';
 import build from './commands/build.js';
+import release from './commands/release.js';
 import test from './commands/test.js';
 
 const commands = {
     serve: [serve, 'Starts a HTTP server with live builds.'],
+    lint: [lint, 'Runs linter.'],
     build: [build, 'Generates a complete build.'],
+    release: [release, 'Alias for lint and build.'],
     test: [test, 'Runs all the tests.']
 }
 
