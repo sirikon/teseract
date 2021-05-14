@@ -2,42 +2,7 @@ import { ESLint } from "eslint";
 
 export default async function(args) {
     const fix = (args || []).indexOf('--fix') >= 0;
-    const eslint = new ESLint({ fix, baseConfig: {
-        'env': {
-            'browser': true,
-            'es2021': true
-        },
-        'extends': [
-            'eslint:recommended',
-            'plugin:@typescript-eslint/recommended'
-        ],
-        'parser': '@typescript-eslint/parser',
-        'parserOptions': {
-            'ecmaVersion': 12,
-            'sourceType': 'module'
-        },
-        'plugins': [
-            '@typescript-eslint'
-        ],
-        'rules': {
-            'indent': [
-                'error',
-                'tab'
-            ],
-            'linebreak-style': [
-                'error',
-                'unix'
-            ],
-            'quotes': [
-                'error',
-                'single'
-            ],
-            'semi': [
-                'error',
-                'always'
-            ]
-        }
-    }});
+    const eslint = new ESLint({ fix });
 
     const results = await eslint.lintFiles([
         "src/**/*.ts"
