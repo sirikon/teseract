@@ -1,3 +1,5 @@
-import { add } from './example/example';
+import App from './app/App';
+import { render } from 'react-dom';
+import React from 'react';
 
-console.log('Hello World', add(3, 4));
+render(React.createElement(App), document.getElementById('app'));
