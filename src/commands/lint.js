@@ -5,7 +5,8 @@ export default async function(args) {
     const eslint = new ESLint({ fix });
 
     const results = await eslint.lintFiles([
-        "src/**/*.ts"
+        "src/**/*.ts",
+        "test/**/*.ts"
     ]);
 
     fix && await ESLint.outputFixes(results);
