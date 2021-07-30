@@ -7,13 +7,7 @@
   "bin": {
     "teseract": "bin/teseract.js"
   },
-  "scripts": {
-    "start": "cd example && node .. serve",
-    "lint-example": "cd example && node .. lint",
-    "build-example": "cd example && node .. build",
-    "release-example": "cd example && node .. release",
-    "test-example": "cd example && node .. test"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/sirikon/teseract.git"
@@ -25,15 +19,15 @@
   },
   "homepage": "https://github.com/sirikon/teseract#readme",
   "dependencies": {
-    "@types/mocha": "^8.2.2",
-    "esbuild": "^0.11.12",
+    "@types/mocha": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "esbuild": "^0.12.17",
+    "eslint": "^7.26.0",
     "fs-extra": "^10.0.0",
     "mime-types": "^2.1.30",
-    "mocha": "^8.3.2",
-    "ts-node": "^9.1.1",
-    "eslint": "^7.26.0",
-    "@typescript-eslint/eslint-plugin": "^4.23.0",
-    "@typescript-eslint/parser": "^4.23.0"
+    "mocha": "^9.0.3",
+    "ts-node": "^10.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.16",

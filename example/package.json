@@ -1,0 +1,13 @@
+{
+    "scripts": {
+        "start": "teseract serve",
+        "test": "teseract test",
+        "lint": "teseract lint",
+        "build": "teseract build",
+        "release": "teseract release"
+    },
+    "devDependencies": {
+        "teseract": "../",
+        "typescript": "^4.2.4"
+    }
+}
