@@ -1,8 +1,6 @@
-import { TextDecoder } from 'util'
+import builder from "../builder";
 
-import builder from './builder'
-
-async function main() {
+export default async function () {
   const resources = await builder({
     workDir: process.cwd()
   });
@@ -13,5 +11,3 @@ async function main() {
     console.log(dec.decode(r.data));
   }
 }
-
-main().then(() => {}, (err) => console.log(err));

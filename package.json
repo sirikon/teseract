@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "example": "cd example && ts-node ../src/main.ts"
+    "example": "cd example && ts-node -P ../tsconfig.json ../src/main.ts",
+    "build": "tsc --project ."
   },
   "devDependencies": {
     "@types/node": "^16.4.10",
