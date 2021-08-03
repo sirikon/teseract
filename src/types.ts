@@ -1,6 +1,6 @@
-export type InitParams = {
+export type Resource = { path: string, data: Uint8Array }
+export type ResourceProviders = ((resources: Resource[]) => Promise<Resource[]>)[]
+
+export type PipelineParams = {
   workDir: string
 }
-
-export type ResourceAliases = { [path: string]: string }
-export type ResourceList = { paths: string[], provider: (aliases: ResourceAliases) => Promise<Uint8Array[]> }[]

@@ -1,16 +1,16 @@
 import { TextDecoder } from 'util'
-import init from "./init";
+
+import build from './build'
 
 async function main() {
-  const list = await init({
-    workDir: process.cwd(),
+  const resources = await build({
+    workDir: process.cwd()
   });
 
-  for(const item of list) {
+  for(const r of resources) {
     var dec = new TextDecoder("utf-8");
-    for(const file of await item.provider({})) {
-      console.log(dec.decode(file))
-    }
+    console.log(r.path);
+    console.log(dec.decode(r.data));
   }
 }
 
