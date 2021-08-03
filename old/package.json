@@ -1,0 +1,38 @@
+{
+  "type": "module",
+  "name": "teseract",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "bin": {
+    "teseract": "bin/teseract.js"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sirikon/teseract.git"
+  },
+  "author": "Carlos Fdez. Llamas <hello@sirikon.me>",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/sirikon/teseract/issues"
+  },
+  "homepage": "https://github.com/sirikon/teseract#readme",
+  "dependencies": {
+    "@types/mocha": "^9.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.23.0",
+    "@typescript-eslint/parser": "^4.23.0",
+    "esbuild": "^0.12.17",
+    "eslint": "^7.26.0",
+    "fs-extra": "^10.0.0",
+    "mime-types": "^2.1.30",
+    "mocha": "^9.0.3",
+    "ts-node": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.16",
+    "chai": "^4.3.4",
+    "sass": "^1.32.11",
+    "typescript": "^4.2.4"
+  }
+}

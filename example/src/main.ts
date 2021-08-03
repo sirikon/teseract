@@ -1,5 +1,7 @@
-import App from './app/App';
-import { render } from 'react-dom';
-import React from 'react';
+console.log('Henlo');
 
-render(React.createElement(App), document.getElementById('app'));
+// import App from './app/App';
+// import { render } from 'react-dom';
+// import React from 'react';
+
+// render(React.createElement(App), document.getElementById('app'));
