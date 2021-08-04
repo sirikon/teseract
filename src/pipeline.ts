@@ -41,10 +41,9 @@ export default async function (params: PipelineParams): Promise<ResourceProvider
       .replace('<!-- teseract:css -->', cssFiles.map(c => `<link rel="stylesheet" href="${c.path}" />`).join(''))
       .replace('<!-- teseract:js -->', jsFiles.map(c => `<script type="text/javascript" src="${c.path}"></script>`).join(''));
 
-    const enc = new TextEncoder();
     return [{
       path: '/index.html',
-      data: enc.encode(index)
+      data: new TextEncoder().encode(index)
     }]
   })
 

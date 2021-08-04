@@ -1,22 +1,20 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, { useState } from 'react';
-
-type TextInputArgs = {
-	text: string,
-	onText: (text: string) => void
-}
-const TextInput = ({ text, onText }: TextInputArgs) =>
-	<input
-		type="text"
-		value={text}
-		onChange={(e) => onText(e.target.value)} />;
-
+import React, { useState } from "react";
 
 export default () => {
-	const [text, setText] = useState('Hello World');
+  const [text, setText] = useState("Hello World");
 
-	return <>
-		<h1>{text}</h1>
-		<TextInput text={text} onText={setText}></TextInput>
-	</>;
+  return <>
+    <h1>{text}</h1>
+    <TextInput text={text} onText={setText}></TextInput>
+  </>;
 };
+
+const TextInput = (params: {
+	text: string,
+	onText: (text: string) => void
+}) => (
+  <input
+    type="text"
+    value={params.text}
+    onChange={(e) => params.onText(e.target.value)} />
+);

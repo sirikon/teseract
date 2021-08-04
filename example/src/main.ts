@@ -1,9 +1,7 @@
-import 'style.scss'
+import "style.scss"
 
-console.log('Henlo');
+import App from "./app/App";
+import { render } from "react-dom";
+import React from "react";
 
-// import App from './app/App';
-// import { render } from 'react-dom';
-// import React from 'react';
-
-// render(React.createElement(App), document.getElementById('app'));
+render(React.createElement(App), document.getElementById("app"));
