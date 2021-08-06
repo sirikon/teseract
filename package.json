@@ -1,8 +1,18 @@
 {
+  "name": "teseract",
+  "version": "2.0.1",
+  "bin": {
+    "teseract": "bin/teseract.js"
+  },
   "scripts": {
     "example": "cd example && ts-node -P ../tsconfig.json ../src/main.ts",
-    "build": "tsc --project ."
+    "build": "tsc --declaration --project .",
+    "prepare": "npm run -s build"
   },
+  "files": [
+    "lib/**/*",
+    "bin/*"
+  ],
   "devDependencies": {
     "@types/chai": "^4.2.21",
     "@types/eslint": "^7.28.0",

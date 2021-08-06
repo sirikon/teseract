@@ -2,7 +2,7 @@
   "compilerOptions": {
     "esModuleInterop": true,
     "strict": true,
-    "outDir": "out"
+    "outDir": "lib"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"]
