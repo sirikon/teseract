@@ -13,4 +13,5 @@ export type ResourceProviders = ((resources: Resource[]) => Promise<BuildResult>
 
 export type PipelineParams = {
   workDir: string
+  externalDependencies: string[]
 }

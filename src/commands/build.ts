@@ -13,9 +13,7 @@ export default async function (args: string[]) {
   }
 
   console.log('Building...');
-  const { resources } = await builder({
-    workDir: process.cwd()
-  });
+  const { resources } = await builder();
 
   const distFolder = p([process.cwd(), 'dist'])
   await rm(distFolder, { recursive: true, force: true })

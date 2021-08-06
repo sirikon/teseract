@@ -63,9 +63,7 @@ async function getResources(): Promise<BuildResult> {
 
 async function buildResources(): Promise<BuildResult> {
   try {
-    return await builder({
-      workDir: process.cwd()
-    });
+    return await builder();
   } catch (err) {
     console.log(err)
     return { resources: [], errors: [] };

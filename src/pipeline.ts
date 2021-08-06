@@ -24,6 +24,14 @@ export default async function (params: PipelineParams): Promise<ResourceProvider
         bundle: true,
         write: false,
         logLevel: 'silent',
+        external: params.externalDependencies,
+        loader: {
+          '.png': 'file',
+          '.jpg': 'file',
+          '.jpeg': 'file',
+          '.svg': 'file',
+          '.ttf': 'file'
+        },
         plugins: [
           sassPlugin()
         ]
