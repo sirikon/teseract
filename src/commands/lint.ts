@@ -33,6 +33,7 @@ export default async function (args: string[]) {
     overrideConfigFile: await fileExists('.eslintrc.json') ? ".eslintrc.json" : undefined,
   });
 
+  console.log('Running linter...');
   const results = await eslint.lintFiles([
     "src/**/*.{ts,tsx}",
     "test/**/*.{ts,tsx}",

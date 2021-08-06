@@ -47,9 +47,7 @@ export default async function () {
     res.end(matchingResource.data);
   });
   
-  server.listen(8080, '0.0.0.0', () => {
-    console.log(`Server running`);
-  });
+  server.listen(8080, '0.0.0.0', () => {});
 
   const tscProcess = startTSCProcess();
   await waitTSC(tscProcess);
@@ -94,11 +92,9 @@ function waitTSC(tscProcess: ChildProcess) {
 }
 
 function closeHttpServer(server: http.Server) {
-  console.log('Closing HTTP server...');
   return new Promise((resolve, reject) => {
     server.close((err) => {
           if (err) { reject(err); return }
-          console.log('HTTP server closed');
           resolve(null);
       })
   });
