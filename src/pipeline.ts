@@ -1,6 +1,6 @@
 import { TextEncoder } from 'util'
 import * as pathUtils from "path";
-import { stat, readFile } from "fs/promises";
+import { stat, readFile, readdir } from "fs/promises";
 
 import * as esbuild from "esbuild";
 import sassPlugin from 'esbuild-plugin-sass'
@@ -11,6 +11,16 @@ export default async function (params: PipelineParams): Promise<ResourceProvider
   const fileExists = _fileExists(params);
 
   const result: ResourceProviders = [];
+
+  result.push(async () => ({
+    resources: (await Promise.all((await getFilesRecursively(p([params.workDir, 'src', 'static'])))
+      .map(path => (async (p) => ({
+        path: p,
+        data: new Uint8Array(await readFile(p))
+      }))(path))))
+      .map(o => ({ ...o, path: '/' + pathUtils.relative(p([params.workDir, 'src', 'static']), o.path) })),
+    errors: []
+  }))
 
   await fileExists(["src", "main.ts"]) && result.push(async () => {
     try {
@@ -73,6 +83,22 @@ export default async function (params: PipelineParams): Promise<ResourceProvider
       errors: []
     }
   })
+
+  return result;
+}
+
+async function getFilesRecursively(directory: string): Promise<string[]> {
+  const result: string[] = []
+  
+  const files = await readdir(directory, { withFileTypes: true });
+  for (const file of files) {
+    const filePath = pathUtils.resolve(directory, file.name);
+    if (file.isDirectory()) {
+      result.push(...await getFilesRecursively(filePath))
+    } else {
+      result.push(filePath)
+    }
+  }
 
   return result;
 }

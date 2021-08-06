@@ -1,4 +1,7 @@
-export type Resource = { path: string, data: Uint8Array }
+export type Resource = {
+  path: string
+  data: Uint8Array
+}
 export type BuildError = {
   file: string
   text: string
