@@ -1,4 +1,4 @@
-import { writeFile, mkdir } from 'fs/promises'
+import { writeFile, mkdir, stat } from 'fs/promises'
 import * as pathUtils from 'path'
 
 export default async function () {
@@ -53,6 +53,12 @@ function json(content: unknown): string {
 
 async function write(path: string, content: string) {
   const fullPath = pathUtils.join(process.cwd(), path);
+
+  try {
+    const statResult = await stat(fullPath);
+    if (statResult.isFile()) return
+  } catch (_) {}
+  
   await mkdir(pathUtils.dirname(fullPath), { recursive: true });
   await writeFile(pathUtils.join(process.cwd(), path), content)
 }

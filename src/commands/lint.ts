@@ -6,30 +6,6 @@ export default async function (args: string[]) {
   const fix = (args || []).indexOf("--fix") >= 0;
   const eslint = new ESLint({
     fix,
-    baseConfig: {
-      "env": {
-        "browser": true,
-        "es2021": true,
-      },
-      "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended",
-      ],
-      "parser": "@typescript-eslint/parser",
-      "parserOptions": {
-        "ecmaVersion": 12,
-        "sourceType": "module",
-      },
-      "plugins": [
-        "@typescript-eslint",
-      ],
-      "rules": {
-        "quotes": ["error", "double"],
-        "indent": ["error", 2],
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-      },
-    },
     overrideConfigFile: await fileExists('.eslintrc.json') ? ".eslintrc.json" : undefined,
   });
 
