@@ -1,6 +1,6 @@
 {
   "name": "teseract",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "bin": {
     "teseract": "bin/teseract.js"
   },
