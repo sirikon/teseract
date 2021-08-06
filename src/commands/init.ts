@@ -45,6 +45,12 @@ export default async function () {
     "editor.tabSize": tabSize
   }))
 
+  write('.vscode/extensions.json', json({
+    "recommendations": [
+      "dbaeumer.vscode-eslint"
+    ]
+  }))
+
 }
 
 function json(content: unknown): string {
