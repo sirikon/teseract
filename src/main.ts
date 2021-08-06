@@ -1,3 +1,4 @@
+import init from './commands/init'
 import lint from './commands/lint'
 import build from './commands/build'
 import serve from './commands/serve'
@@ -6,6 +7,7 @@ import test from './commands/test'
 const commands: {
   [key: string]: [(args: string[]) => Promise<void>, string]
 } = {
+  init: [init, 'Initialize the project, creating some files with defaults'],
   serve: [serve, 'Starts a HTTP server with live builds.'],
   lint: [lint, 'Runs linter.'],
   build: [build, 'Generates a complete build.'],
