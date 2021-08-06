@@ -9,10 +9,11 @@ import { PipelineParams, ResourceProviders } from "./types";
 
 export default async function (params: PipelineParams): Promise<ResourceProviders> {
   const fileExists = _fileExists(params);
+  const directoryExists = _directoryExists(params);
 
   const result: ResourceProviders = [];
 
-  result.push(async () => ({
+  await directoryExists(['src', 'static']) && result.push(async () => ({
     resources: (await Promise.all((await getFilesRecursively(p([params.workDir, 'src', 'static'])))
       .map(path => (async (p) => ({
         path: p,
@@ -107,6 +108,15 @@ const _fileExists = (params: PipelineParams) =>
   async (chunks: string[]) => {
     try {
       return (await stat(p([params.workDir, ...chunks]))).isFile();
+    } catch (_) {
+      return false;
+    }
+  };
+
+const _directoryExists = (params: PipelineParams) =>
+  async (chunks: string[]) => {
+    try {
+      return (await stat(p([params.workDir, ...chunks]))).isDirectory();
     } catch (_) {
       return false;
     }
