@@ -13,24 +13,40 @@ export default async function (params: PipelineParams): Promise<ResourceProvider
   const result: ResourceProviders = [];
 
   await fileExists(["src", "main.ts"]) && result.push(async () => {
-    const result = await esbuild.build({
-      entryPoints: [`${params.workDir}/src/main.ts`],
-      entryNames: '[dir]/[name]-[hash]',
-      target: "es2016",
-      sourcemap: true,
-      outdir: '/',
-      minify: true,
-      bundle: true,
-      write: false,
-      plugins: [
-        sassPlugin()
-      ]
-    });
+    try {
+      const result = await esbuild.build({
+        entryPoints: [`${params.workDir}/src/main.ts`],
+        entryNames: '[dir]/[name]-[hash]',
+        target: "es2016",
+        sourcemap: true,
+        outdir: '/',
+        minify: true,
+        bundle: true,
+        write: false,
+        logLevel: 'silent',
+        plugins: [
+          sassPlugin()
+        ]
+      });
 
-    return result.outputFiles.map(f => ({
-      path: f.path,
-      data: f.contents
-    }))
+      return {
+        resources: result.outputFiles.map(f => ({
+          path: f.path,
+          data: f.contents
+        })),
+        errors: []
+      }
+    } catch (err) {
+      return {
+        resources: [],
+        errors: err.errors.map((e: any) => ({
+          file: e.detail && e.detail.file
+            ? pathUtils.relative(params.workDir, e.detail.file)
+            : `${e.location.file}:${e.location.line}:${e.location.column}`,
+          text: e.text
+        }))
+      }
+    }
   })
 
   await fileExists(["src", "index.html"]) && result.push(async (resources) => {
@@ -41,10 +57,13 @@ export default async function (params: PipelineParams): Promise<ResourceProvider
       .replace('<!-- teseract:css -->', cssFiles.map(c => `<link rel="stylesheet" href="${c.path}" />`).join(''))
       .replace('<!-- teseract:js -->', jsFiles.map(c => `<script type="text/javascript" src="${c.path}"></script>`).join(''));
 
-    return [{
-      path: '/index.html',
-      data: new TextEncoder().encode(index)
-    }]
+    return {
+      resources: [{
+        path: '/index.html',
+        data: new TextEncoder().encode(index)
+      }],
+      errors: []
+    }
   })
 
   return result;

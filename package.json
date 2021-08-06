@@ -5,14 +5,17 @@
   },
   "devDependencies": {
     "@types/eslint": "^7.28.0",
+    "@types/mime-types": "^2.1.0",
     "@types/node": "^16.4.10",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^4.29.0",
+    "chokidar": "^3.5.2",
     "esbuild": "^0.12.17",
     "esbuild-plugin-sass": "^0.5.2",
-    "eslint": "^7.32.0"
+    "eslint": "^7.32.0",
+    "mime-types": "^2.1.32"
   }
 }

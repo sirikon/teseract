@@ -4,7 +4,7 @@ import { rm, mkdir, writeFile } from 'fs/promises'
 import builder from "../builder";
 
 export default async function () {
-  const resources = await builder({
+  const { resources } = await builder({
     workDir: process.cwd()
   });
 
