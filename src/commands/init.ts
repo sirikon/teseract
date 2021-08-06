@@ -61,6 +61,20 @@ ${tab()}export default content;
     'console.log("Hello World");'
   ]))
 
+  write('src/index.html', `
+<html>
+  <head>
+    <title>Example</title>
+    <meta charset="utf-8">
+    <!-- teseract:css -->
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- teseract:js -->
+  </body>
+</html>
+  `.trim())
+
 }
 
 function json(content: unknown): string {
