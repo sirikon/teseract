@@ -6,6 +6,7 @@ import * as esbuild from "esbuild";
 import sassPlugin from 'esbuild-plugin-sass'
 
 import { PipelineParams, ResourceProviders } from "./types";
+import config from './config';
 
 export default async function (params: PipelineParams): Promise<ResourceProviders> {
   const fileExists = _fileExists(params);
@@ -36,13 +37,10 @@ export default async function (params: PipelineParams): Promise<ResourceProvider
         write: false,
         logLevel: 'silent',
         external: params.externalDependencies,
-        loader: {
-          '.png': 'file',
-          '.jpg': 'file',
-          '.jpeg': 'file',
-          '.svg': 'file',
-          '.ttf': 'file'
-        },
+        loader: toObject<esbuild.Loader>(config.extensionsLoadedAsFiles.map((ext) => ([
+          `.${ext}`,
+          'file'
+        ]))),
         plugins: [
           sassPlugin()
         ]
@@ -121,5 +119,13 @@ const _directoryExists = (params: PipelineParams) =>
       return false;
     }
   };
+
+const toObject = <T>(data: [string, T][]): { [key: string]: T } => {
+  const result:{ [key: string]: T } = {};
+  for(const entry of data) {
+    result[entry[0]] = entry[1];
+  }
+  return result;
+}
 
 const p = (chunks: string[]) => pathUtils.join(...chunks);

@@ -4,3 +4,4 @@
 /.vscode
 /tsconfig.json
 /.eslintrc.json
+/src/index.d.ts

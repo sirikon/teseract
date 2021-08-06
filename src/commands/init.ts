@@ -1,10 +1,9 @@
 import { writeFile, mkdir, stat } from 'fs/promises'
 import * as pathUtils from 'path'
 
-export default async function () {
+import config from '../config'
 
-  const tabSize = 2;
-  const quotes = "double";
+export default async function () {
 
   write('tsconfig.json', json({
     "compilerOptions": {
@@ -34,15 +33,15 @@ export default async function () {
       "@typescript-eslint",
     ],
     "rules": {
-      "quotes": ["error", quotes],
-      "indent": ["error", tabSize],
+      "quotes": ["error", config.quotes],
+      "indent": ["error", config.tabSize],
       "@typescript-eslint/explicit-module-boundary-types": "off",
     },
   }))
 
   write('.vscode/settings.json', json({
     "editor.detectIndentation": false,
-    "editor.tabSize": tabSize
+    "editor.tabSize": config.tabSize
   }))
 
   write('.vscode/extensions.json', json({
@@ -51,10 +50,21 @@ export default async function () {
     ]
   }))
 
+  write('src/index.d.ts', lines(config.extensionsLoadedAsFiles.map((ext) => `
+declare module "*.${ext}" {
+${tab()}const content: string;
+${tab()}export default content;
+}
+  `.trim())))
+
 }
 
 function json(content: unknown): string {
   return JSON.stringify(content, null, 2)
+}
+
+function lines(content: string[]): string {
+  return content.join('\n');
 }
 
 async function write(path: string, content: string) {
@@ -65,6 +75,11 @@ async function write(path: string, content: string) {
     if (statResult.isFile()) return
   } catch (_) {}
   
+  console.log('Writing ' + path);
   await mkdir(pathUtils.dirname(fullPath), { recursive: true });
   await writeFile(pathUtils.join(process.cwd(), path), content)
+}
+
+function tab() {
+  return Array(config.tabSize+1).join(' ');
 }
