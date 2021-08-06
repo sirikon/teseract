@@ -57,6 +57,10 @@ ${tab()}export default content;
 }
   `.trim())))
 
+  write('src/main.ts', lines([
+    'console.log("Hello World");'
+  ]))
+
 }
 
 function json(content: unknown): string {
@@ -69,15 +73,29 @@ function lines(content: string[]): string {
 
 async function write(path: string, content: string) {
   const fullPath = pathUtils.join(process.cwd(), path);
-
-  try {
-    const statResult = await stat(fullPath);
-    if (statResult.isFile()) return
-  } catch (_) {}
+  if (await fileExists(fullPath)) return
   
   console.log('Writing ' + path);
   await mkdir(pathUtils.dirname(fullPath), { recursive: true });
   await writeFile(pathUtils.join(process.cwd(), path), content)
+}
+
+async function fileExists(path: string) {
+  try {
+    const statResult = await stat(path);
+    if (statResult.isFile()) return true
+  } catch (_) {
+    return false
+  }
+}
+
+async function directoryExists(path: string) {
+  try {
+    const statResult = await stat(path);
+    if (statResult.isDirectory()) return true
+  } catch (_) {
+    return false
+  }
 }
 
 function tab() {
