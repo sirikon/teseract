@@ -1,4 +1,4 @@
-import { readFile } from 'fs/promises'
+import * as fs from 'fs/promises'
 import * as pathUtils from 'path'
 
 import pipeline from "./pipeline";
@@ -21,7 +21,13 @@ export default async function (): Promise<BuildResult> {
 }
 
 async function getExternalDependencies(): Promise<string[]> {
-  const data = JSON.parse(await readFile(pathUtils.join(process.cwd(), 'package.json'), { encoding: 'utf-8' }));
+  const packageFilePath = pathUtils.join(process.cwd(), 'package.json');
+
+  try {
+    if (!(await fs.stat(packageFilePath)).isFile()) { return [] }
+  } catch (_) { return [] }
+
+  const data = JSON.parse(await fs.readFile(packageFilePath, { encoding: 'utf-8' }));
   if (!data.teseract) return [];
   if (!data.teseract.externalDependencies) return [];
   return data.teseract.externalDependencies;
