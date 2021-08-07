@@ -50,6 +50,19 @@ export default async function () {
     ]
   }))
 
+  await writeCompleteFile('.vscode/launch.json', json({
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node-terminal",
+        "name": "Test",
+        "request": "launch",
+        "command": "npm exec teseract test && exit",
+        "cwd": "${workspaceFolder}"
+      }
+    ]
+  }))
+
   await writePartialFile({
     path: 'src/index.d.ts',
     initialMessage: longComment(
@@ -80,7 +93,8 @@ ${tab()}export default content;
       'tsconfig.json',
       '.eslintrc.json',
       '.vscode/settings.json',
-      '.vscode/extensions.json'
+      '.vscode/extensions.json',
+      '.vscode/launch.json'
     ])
   })
 
