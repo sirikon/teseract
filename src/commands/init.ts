@@ -3,11 +3,11 @@ import * as pathUtils from 'path'
 
 export default async function () {
 
-  write('src/main.ts', lines([
+  await write('src/main.ts', lines([
     'console.log("Hello World");'
   ]))
 
-  write('src/index.html', `
+  await write('src/index.html', `
 <html>
   <head>
     <title>Example</title>
