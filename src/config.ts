@@ -1,24 +1,34 @@
 import * as fs from 'fs/promises'
 import * as p from 'path'
-import { number, object, string, Infer, union, literal, record, assert } from "superstruct"
+import { number, object, string, Infer, union, literal, record, assert, array } from "superstruct"
 
 const ConfigStruct = object({
-  indentation: number(),
-  quotes: union([literal("double"), literal("single")]),
-  loaders: record(string(), union([literal("file"), literal("other")]))
+  style: object({
+    indentation: number(),
+    quotes: union([literal("double"), literal("single")]),
+  }),
+  build: object({
+    loaders: record(string(), union([literal("file"), literal("other")])),
+    externalDependencies: array(string())
+  })
 })
 export type Config = Infer<typeof ConfigStruct>
 
 const defaultConfig: Config = {
-  indentation: 2,
-  quotes: "double",
-  loaders: {
-    '.jpg': 'file',
-    '.jpeg': 'file',
-    '.png': 'file',
-    '.gif': 'file',
-    '.svg': 'file',
-    '.ttf': 'file',
+  style: {
+    indentation: 2,
+    quotes: "double",
+  },
+  build: {
+    loaders: {
+      '.jpg': 'file',
+      '.jpeg': 'file',
+      '.png': 'file',
+      '.gif': 'file',
+      '.svg': 'file',
+      '.ttf': 'file',
+    },
+    externalDependencies: []
   }
 }
 
