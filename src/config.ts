@@ -55,7 +55,7 @@ function merge(data: any, base: any) {
     if (data[key] == null) {
       result[key] = base[key]
     } else {
-      if (typeof base[key] === "object" && typeof data[key] === "object") {
+      if (typeof base[key] === "object" && typeof data[key] === "object" && !Array.isArray(base[key])) {
         result[key] = merge(data[key], base[key])
       } else {
         result[key] = data[key];
