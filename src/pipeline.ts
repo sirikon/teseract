@@ -6,7 +6,7 @@ import * as esbuild from "esbuild";
 import sassPlugin from 'esbuild-plugin-sass'
 
 import { PipelineParams, ResourceProviders } from "./types";
-import config from './config';
+import { getConfig } from './config';
 
 export default async function (params: PipelineParams): Promise<ResourceProviders> {
   const fileExists = _fileExists(params);
@@ -25,6 +25,7 @@ export default async function (params: PipelineParams): Promise<ResourceProvider
   }))
 
   await fileExists(["src", "main.ts"]) && result.push(async () => {
+    const config = await getConfig();
     try {
       const result = await esbuild.build({
         entryPoints: [`${params.workDir}/src/main.ts`],
@@ -37,8 +38,8 @@ export default async function (params: PipelineParams): Promise<ResourceProvider
         write: false,
         logLevel: 'silent',
         external: params.externalDependencies,
-        loader: toObject<esbuild.Loader>(config.extensionsLoadedAsFiles.map((ext) => ([
-          `.${ext}`,
+        loader: toObject<esbuild.Loader>(Object.entries(config.loaders).filter(([_, type]) => type === 'file').map(([ext]) => ext).map((ext) => ([
+          ext,
           'file'
         ]))),
         plugins: [

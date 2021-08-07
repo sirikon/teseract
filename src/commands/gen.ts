@@ -1,9 +1,13 @@
 import * as fs from 'fs/promises'
 import * as pathUtils from 'path'
 
-import config from '../config'
+import { getConfig } from '../config'
 
 export default async function () {
+
+  const config = await getConfig();
+  const tab = () => Array(config.indentation+1).join(' ');
+  const json = (data: any) => JSON.stringify(data, null, config.indentation);
 
   await writeCompleteFile('tsconfig.json', json({
     "compilerOptions": {
@@ -34,14 +38,14 @@ export default async function () {
     ],
     "rules": {
       "quotes": ["error", config.quotes],
-      "indent": ["error", config.tabSize],
+      "indent": ["error", config.indentation],
       "@typescript-eslint/explicit-module-boundary-types": "off",
     },
   }))
 
   await writeCompleteFile('.vscode/settings.json', json({
     "editor.detectIndentation": false,
-    "editor.tabSize": config.tabSize
+    "editor.tabSize": config.indentation
   }))
 
   await writeCompleteFile('.vscode/extensions.json', json({
@@ -71,8 +75,8 @@ export default async function () {
     ),
     delimiterStart: '// GENERATED teseract definitions',
     delimiterEnd: '// END GENERATED teseract definitions',
-    content: lines(config.extensionsLoadedAsFiles.map((ext) => `
-declare module "*.${ext}" {
+    content: lines(Object.entries(config.loaders).filter(([_, type]) => type === 'file').map(([ext]) => ext).map((ext) => `
+declare module "*${ext}" {
 ${tab()}const content: string;
 ${tab()}export default content;
 }
@@ -98,10 +102,6 @@ ${tab()}export default content;
     ])
   })
 
-}
-
-function json(content: unknown): string {
-  return JSON.stringify(content, null, 2)
 }
 
 function lines(content: string[]): string {
@@ -172,8 +172,4 @@ async function fileExists(path: string) {
   } catch (_) {
     return false
   }
-}
-
-function tab() {
-  return Array(config.tabSize+1).join(' ');
 }
