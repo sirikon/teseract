@@ -1,13 +1,13 @@
-import * as fs from 'fs/promises'
-import * as pathUtils from 'path'
+import { getConfig } from './config';
 
 import pipeline from "./pipeline";
 import { BuildError, BuildResult, PipelineParams, Resource } from "./types";
 
 export default async function (): Promise<BuildResult> {
+  const config = await getConfig();
   const params: PipelineParams = {
     workDir: process.cwd(),
-    externalDependencies: await getExternalDependencies()
+    externalDependencies: config.build.externalDependencies
   }
   const providers = await pipeline(params);
   const resources: Resource[] = [];
@@ -18,17 +18,4 @@ export default async function (): Promise<BuildResult> {
     errors.push(...result.errors);
   }
   return { resources, errors };
-}
-
-async function getExternalDependencies(): Promise<string[]> {
-  const packageFilePath = pathUtils.join(process.cwd(), 'package.json');
-
-  try {
-    if (!(await fs.stat(packageFilePath)).isFile()) { return [] }
-  } catch (_) { return [] }
-
-  const data = JSON.parse(await fs.readFile(packageFilePath, { encoding: 'utf-8' }));
-  if (!data.teseract) return [];
-  if (!data.teseract.externalDependencies) return [];
-  return data.teseract.externalDependencies;
 }
