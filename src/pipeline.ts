@@ -38,7 +38,7 @@ export default async function (params: PipelineParams): Promise<ResourceProvider
         write: false,
         logLevel: 'silent',
         external: params.externalDependencies,
-        loader: toObject<esbuild.Loader>(Object.entries(config.loaders).filter(([_, type]) => type === 'file').map(([ext]) => ext).map((ext) => ([
+        loader: toObject<esbuild.Loader>(Object.entries(config.build.loaders).filter(([_, type]) => type === 'file').map(([ext]) => ext).map((ext) => ([
           ext,
           'file'
         ]))),

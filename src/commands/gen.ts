@@ -6,8 +6,8 @@ import { getConfig } from '../config'
 export default async function () {
 
   const config = await getConfig();
-  const tab = () => Array(config.indentation+1).join(' ');
-  const json = (data: any) => JSON.stringify(data, null, config.indentation);
+  const tab = () => Array(config.style.indentation+1).join(' ');
+  const json = (data: any) => JSON.stringify(data, null, config.style.indentation);
 
   await writeCompleteFile('tsconfig.json', json({
     "compilerOptions": {
@@ -37,15 +37,15 @@ export default async function () {
       "@typescript-eslint",
     ],
     "rules": {
-      "quotes": ["error", config.quotes],
-      "indent": ["error", config.indentation],
+      "quotes": ["error", config.style.quotes],
+      "indent": ["error", config.style.indentation],
       "@typescript-eslint/explicit-module-boundary-types": "off",
     },
   }))
 
   await writeCompleteFile('.vscode/settings.json', json({
     "editor.detectIndentation": false,
-    "editor.tabSize": config.indentation
+    "editor.tabSize": config.style.indentation
   }))
 
   await writeCompleteFile('.vscode/extensions.json', json({
@@ -75,7 +75,7 @@ export default async function () {
     ),
     delimiterStart: '// GENERATED teseract definitions',
     delimiterEnd: '// END GENERATED teseract definitions',
-    content: lines(Object.entries(config.loaders).filter(([_, type]) => type === 'file').map(([ext]) => ext).map((ext) => `
+    content: lines(Object.entries(config.build.loaders).filter(([_, type]) => type === 'file').map(([ext]) => ext).map((ext) => `
 declare module "*${ext}" {
 ${tab()}const content: string;
 ${tab()}export default content;
