@@ -1,7 +1,7 @@
 import * as fs from 'fs/promises'
 import * as pathUtils from 'path'
 
-import { getConfig, Config } from '../config'
+import { getConfig } from '../config'
 
 export default async function () {
 
