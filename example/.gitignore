@@ -1,7 +1,11 @@
-/dist
-/node_modules
 /package-lock.json
-/.vscode
-/tsconfig.json
-/.eslintrc.json
-/src/index.d.ts
+
+# GENERATED teseract gitignore
+/node_modules
+/dist
+tsconfig.json
+.eslintrc.json
+.vscode/settings.json
+.vscode/extensions.json
+.vscode/launch.json
+# END GENERATED teseract gitignore

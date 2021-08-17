@@ -9,12 +9,13 @@ export default () => {
   </>;
 };
 
-const TextInput = (params: {
-	text: string,
-	onText: (text: string) => void
-}) => (
+type TextInputParams = {
+  text: string,
+  onText: (text: string) => void
+}
+
+const TextInput = (params: TextInputParams) => 
   <input
     type="text"
     value={params.text}
     onChange={(e) => params.onText(e.target.value)} />
-);
