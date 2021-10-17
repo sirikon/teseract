@@ -50,7 +50,7 @@ export default async function () {
     ['.vscode/extensions.json', () => json({
       "recommendations": [
         "dbaeumer.vscode-eslint",
-        "eamodio.toggle-excluded-files"
+        "amodio.toggle-excluded-files"
       ]
     })],
 

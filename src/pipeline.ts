@@ -54,7 +54,7 @@ export default async function (params: PipelineParams): Promise<ResourceProvider
         })),
         errors: []
       }
-    } catch (err) {
+    } catch (err: any) {
       return {
         resources: [],
         errors: err.errors.map((e: any) => ({
