@@ -26,10 +26,14 @@ export default async function (params: PipelineParams): Promise<ResourceProvider
 
   await fileExists(["src", "main.ts"]) && result.push(async () => {
     const config = await getConfig();
+    const activeProfile = process.env.TESERACT_PROFILE
+      ? config.profiles[process.env.TESERACT_PROFILE]
+      : {}
     try {
       const result = await esbuild.build({
         entryPoints: [`${params.workDir}/src/main.ts`],
         entryNames: '[dir]/[name]-[hash]',
+        define: activeProfile,
         target: "es2016",
         sourcemap: true,
         outdir: '/',

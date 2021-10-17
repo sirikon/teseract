@@ -3,6 +3,7 @@ import * as p from 'path'
 import { number, object, string, Infer, union, literal, record, assert, array } from "superstruct"
 
 const ConfigStruct = object({
+  profiles: record(string(), record(string(), string())),
   style: object({
     indentation: number(),
     quotes: union([literal("double"), literal("single")]),
@@ -15,6 +16,7 @@ const ConfigStruct = object({
 export type Config = Infer<typeof ConfigStruct>
 
 const defaultConfig: Config = {
+  profiles: {},
   style: {
     indentation: 2,
     quotes: "double",
