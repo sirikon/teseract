@@ -4,6 +4,10 @@ import { number, object, string, Infer, union, literal, record, assert, array } 
 
 const ConfigStruct = object({
   profiles: record(string(), record(string(), string())),
+  serve: object({
+    port: number(),
+    host: string(),
+  }),
   style: object({
     indentation: number(),
     quotes: union([literal("double"), literal("single")]),
@@ -17,6 +21,10 @@ export type Config = Infer<typeof ConfigStruct>
 
 const defaultConfig: Config = {
   profiles: {},
+  serve: {
+    port: 8080,
+    host: '0.0.0.0'
+  },
   style: {
     indentation: 2,
     quotes: "double",

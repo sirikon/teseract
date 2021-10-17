@@ -7,9 +7,11 @@ import mime from 'mime-types'
 import builder from "../builder";
 import { BuildResult, Resource } from "../types";
 import { ChildProcess, spawn } from "child_process";
+import { getConfig } from "../config";
 
 export default async function () {
 
+  const config = await getConfig()
   const watcher = await watch(p([process.cwd(), 'src']))
 
   watcher.on('all', () => {
@@ -46,8 +48,8 @@ export default async function () {
     res.setHeader('Content-Type', mime.lookup(path) || 'application/octet-stream')
     res.end(matchingResource.data);
   });
-  
-  server.listen(8080, '0.0.0.0', () => {});
+
+  server.listen(config.serve.port, config.serve.host, () => {});
 
   const tscProcess = startTSCProcess();
   await waitTSC(tscProcess);
