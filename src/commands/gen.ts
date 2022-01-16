@@ -70,6 +70,26 @@ export default async function () {
     ['.vscode/settings.json', () => json({
       "editor.detectIndentation": false,
       "editor.tabSize": config.style.indentation,
+      "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+      },
+      "[typescriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+      },
+      "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+      },
+      "[javascriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+      },
+      "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features",
+        "files.insertFinalNewline": true
+      },
+      "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features",
+        "files.insertFinalNewline": true
+      },
       "files.exclude": {
         "node_modules": true,
         "package-lock.json": true,
@@ -79,7 +99,7 @@ export default async function () {
     })],
   ]
 
-  for(const [path, content] of completeFiles) {
+  for (const [path, content] of completeFiles) {
     await writeCompleteFile(path, content());
   }
 
