@@ -70,17 +70,18 @@ export default async function () {
     ['.vscode/settings.json', () => json({
       "editor.detectIndentation": false,
       "editor.tabSize": config.style.indentation,
+      "eslint.format.enable": true,
       "[typescript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
       },
       "[typescriptreact]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
       },
       "[javascript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
       },
       "[javascriptreact]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
+        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
       },
       "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features",
