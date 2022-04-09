@@ -91,6 +91,14 @@ export default async function () {
         "editor.defaultFormatter": "vscode.json-language-features",
         "files.insertFinalNewline": true
       },
+      "[scss]": {
+        "editor.defaultFormatter": "vscode.css-language-features",
+        "files.insertFinalNewline": true
+      },
+      "[css]": {
+        "editor.defaultFormatter": "vscode.css-language-features",
+        "files.insertFinalNewline": true
+      },
       "files.exclude": {
         "node_modules": true,
         "package-lock.json": true,
