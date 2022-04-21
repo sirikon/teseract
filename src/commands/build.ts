@@ -3,6 +3,7 @@ import { rm, mkdir, writeFile } from 'fs/promises'
 
 import builder from "../builder";
 import { spawnSync } from "child_process";
+import { dirname } from "path";
 
 export default async function (args: string[]) {
 
@@ -19,8 +20,10 @@ export default async function (args: string[]) {
   await rm(distFolder, { recursive: true, force: true })
   await mkdir(distFolder)
 
-  for(const r of resources) {
-    await writeFile(p([distFolder, r.path]), Buffer.from(r.data))
+  for (const r of resources) {
+    const destination = p([distFolder, r.path])
+    await mkdir(dirname(destination), { recursive: true })
+    await writeFile(destination, Buffer.from(r.data))
   }
 }
 
