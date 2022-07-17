@@ -47,10 +47,16 @@ export default async function () {
       },
     })],
 
+    ['.prettierrc.json', () => json({
+      "tabWidth": config.style.indentation,
+      "singleQuote": config.style.quotes === "single"
+    })],
+
     ['.vscode/extensions.json', () => json({
       "recommendations": [
         "dbaeumer.vscode-eslint",
-        "amodio.toggle-excluded-files"
+        "amodio.toggle-excluded-files",
+        "esbenp.prettier-vscode"
       ]
     })],
 
@@ -72,16 +78,16 @@ export default async function () {
       "editor.tabSize": config.style.indentation,
       "eslint.format.enable": true,
       "[typescript]": {
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
       },
       "[typescriptreact]": {
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
       },
       "[javascript]": {
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
       },
       "[javascriptreact]": {
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
       },
       "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features",

@@ -6,6 +6,7 @@
 /dist
 tsconfig.json
 .eslintrc.json
+.prettierrc.json
 .vscode/extensions.json
 .vscode/launch.json
 .vscode/settings.json
