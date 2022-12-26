@@ -17,7 +17,10 @@ export default async function () {
       "compilerOptions": {
         "esModuleInterop": true,
         "strict": true,
-        "jsx": "react"
+        "jsx": "react",
+        "paths": {
+          "@/*": ["./src/*"]
+        }
       },
       "include": ["src/**/*"]
     })],
